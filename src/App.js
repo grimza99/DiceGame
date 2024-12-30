@@ -14,7 +14,7 @@ function App() {
     const nextNum = random(6);
     setNum(nextNum);
     setSum(sum + nextNum);
-    setGameHistory(...(gameHistory + nextNum));
+    setGameHistory([...(gameHistory + nextNum)]);
   };
 
   const handleClearClick = () => {
