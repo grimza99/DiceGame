@@ -1,26 +1,32 @@
-import Dice from "./Dice";
-import Button from "./Button.js";
+import Board from "./Board.js";
 import { useState } from "react";
+import Button from "./Button.js";
+
 function random(n) {
   return Math.ceil(Math.random() * n);
 }
-
 function App() {
-  const [num, setNum] = useState(1);
-  const [sum, setSum] = useState(0);
-  const [gameHistory, setGameHistory] = useState([]);
+  const [myHistory, setMyHistory] = useState([]); //나의 주사위 기록
+  const [otherHistory, setOtherHistory] = useState([]); //상대의 주사위 기록
 
   const handleClick = () => {
-    const nextNum = random(6);
-    setNum(nextNum);
-    setSum(sum + nextNum);
-    setGameHistory([...(gameHistory + nextNum)]);
+    const nextMyNum = random(6);
+    const nextOtherNum = random(6);
+    // setNum(nextMyNum);
+    // setOtherNum(nextOtherNum);
+    // setSum(sum + nextMyNum);
+    // setOtherSum(otherSum + nextOtherNum);
+    setMyHistory([...myHistory, nextMyNum]);
+    setOtherHistory([...otherHistory, nextOtherNum]);
   };
 
   const handleClearClick = () => {
-    setNum(1);
-    setSum(0);
-    setGameHistory([]);
+    // setNum(1);
+    // setSum(0);
+    setMyHistory([]);
+    // setOtherNum(1);
+    // setOtherSum(0);
+    setOtherHistory([]);
   };
   return (
     <div>
@@ -29,14 +35,8 @@ function App() {
         <Button onClick={handleClearClick}>처음부터</Button>
       </div>
       <div>
-        <h2>나</h2>
-        <Dice color="blue" num={num}></Dice>
-        <h2>상대</h2>
-        <Dice color="red" num={num}></Dice>
-        <h2>총점</h2>
-        <p>{sum}</p>
-        <h2>기록</h2>
-        <p>{gameHistory.join(", ")}</p>
+        <Board name="나" color="blue" gameHistory={myHistory} />
+        <Board name="상대" color="red" gameHistory={otherHistory} />
       </div>
     </div>
   );
